@@ -72,10 +72,7 @@ AccountSchema.statics.authenticate = async (username, password, callback) => {
   }
 };
 
-const logout = (req,res)=>{
-  req.session.destroy(); 
-  res.redirect('/');
-}
+
 
 AccountModel = mongoose.model('Account', AccountSchema);
 module.exports = AccountModel;
