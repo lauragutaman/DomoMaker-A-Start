@@ -6,6 +6,7 @@ const favicon = require('serve-favicon');
 const mongoose = require('mongoose');
 const expressHandleBars = require('express-handlebars');
 const helmet = require('helmet');
+const session = require('express-session'); 
 
 const router = require('./router.js');
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
@@ -13,8 +14,9 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/Domomaker';
 mongoose.connect(dbURI).catch((err) => {
     if (err) {
-        console.log('Could not connect to database');
         throw err;
+        console.log('Could not connect to database');
+
     }
 });
 
@@ -27,6 +29,13 @@ app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); 
 
+app.use(session({
+    key: 'sessionID', 
+    secret: 'Domo Arigato', 
+    resave: false, 
+    saveUninitialized: false,
+})); 
+
 
 app.engine('handlebars', expressHandleBars.engine({ defaultLayout: '' }));
 app.set('view engine', 'handlebars');
@@ -38,3 +47,4 @@ app.listen(port, (err) => {
     if (err) { throw err; }
     console.log(`Listening on port ${port}`);
 });
+
