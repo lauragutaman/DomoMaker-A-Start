@@ -11,7 +11,6 @@ const logout = (req, res) => {
     res.redirect('/');
 }
 
-res.redirect('/');
 
 const login = (req, res) => {
     const username = `${req.body.username}`;
